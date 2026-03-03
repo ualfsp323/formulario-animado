@@ -1,0 +1,26 @@
+<div class="home-wrapper" [style.background-color]="backgroundColor">
+  <app-timer></app-timer>
+  <app-monkey-background></app-monkey-background>
+
+  <div class="user-profile">
+    <div class="profile-photo">
+      <img *ngIf="userPhoto" [src]="userPhoto" alt="User Photo">
+      <div *ngIf="!userPhoto" class="placeholder-photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+    </div>
+    <h1 class="user-name">{{ userName || 'Usuario' }}</h1>
+  </div>
+
+  <div class="color-slider">
+    <label for="bgColor">Color de Fondo</label>
+    <input 
+      type="color" 
+      id="bgColor" 
+      [(ngModel)]="backgroundColor"
+      (change)="onColorChange($event)">
+  </div>
+</div>
