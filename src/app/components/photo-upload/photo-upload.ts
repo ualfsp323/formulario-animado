@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './photo-upload.html',
-  styleUrls: ['./photo-upload.css']
+  styleUrls: ['./photo-upload.css', '../../../styles/photo-upload-shared.css']
 })
 export class PhotoUploadComponent {
   @Output() photoSelected = new EventEmitter<string>();

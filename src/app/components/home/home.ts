@@ -21,6 +21,7 @@ export class HomeComponent {
   backgroundColor = '#667eea';
   leftImage = '';
   rightImage = '';
+  profileImage = '';
 
   toggleCustomization() {
     this.showCustomization = !this.showCustomization;
@@ -34,5 +35,8 @@ export class HomeComponent {
     this.backgroundColor = config.backgroundColor;
     this.leftImage = config.leftImage;
     this.rightImage = config.rightImage;
+    if (config.profileImage) {
+      this.userPhoto = config.profileImage;
+    }
   }
 }

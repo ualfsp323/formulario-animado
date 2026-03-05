@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,6 +7,7 @@ interface Ball {
   y: number;
   dx: number;
   dy: number;
+  isColliding: boolean;
 }
 
 @Component({
@@ -19,6 +20,8 @@ interface Ball {
 export class BrickBreakerComponent implements OnInit, OnDestroy {
   @ViewChild('gameCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @Input() userPhoto: string = '';
+
+  constructor(private cdr: ChangeDetectorRef) {}
   
   private ctx!: CanvasRenderingContext2D;
   private ballRadius = 20;
@@ -61,7 +64,8 @@ export class BrickBreakerComponent implements OnInit, OnDestroy {
         x: canvas.width / 2 + (i * 50),
         y: canvas.height - 30 - (i * 30),
         dx: this.speed * (Math.random() > 0.5 ? 1 : -1),
-        dy: -this.speed
+        dy: -this.speed,
+        isColliding: false
       });
     }
   }
@@ -88,8 +92,8 @@ export class BrickBreakerComponent implements OnInit, OnDestroy {
 
   private playCollisionSound() {
     if (this.collisionSound) {
-      this.collisionSound.currentTime = 0;
-      this.collisionSound.play().catch(() => {});
+      const sound = this.collisionSound.cloneNode(true) as HTMLAudioElement;
+      sound.play().catch(() => {});
     }
   }
 
@@ -134,8 +138,12 @@ export class BrickBreakerComponent implements OnInit, OnDestroy {
         collided = true;
       }
 
-      if (collided) {
+      if (collided && !ball.isColliding) {
         this.playCollisionSound();
+        this.cdr.detectChanges();
+        ball.isColliding = true;
+      } else if (!collided) {
+        ball.isColliding = false;
       }
 
       ball.x += ball.dx;

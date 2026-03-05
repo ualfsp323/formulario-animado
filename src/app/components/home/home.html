@@ -41,7 +41,7 @@
 
   <app-customization 
     *ngIf="showCustomization"
-    [currentConfig]="{backgroundColor, leftImage, rightImage}"
+    [currentConfig]="{backgroundColor, leftImage, rightImage, profileImage: userPhoto}"
     (configChange)="onCustomizationChange($event)"
     (close)="toggleCustomization()">
   </app-customization>
