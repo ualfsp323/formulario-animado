@@ -7,7 +7,7 @@
   <div class="form-container" [class.submitted]="submitted">
     <h1 class="form-title">Registro de Usuario</h1>
     
-    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <form (ngSubmit)="onSubmit($event)" #userForm="ngForm">
       <app-photo-upload (photoSelected)="onPhotoSelected($event)"></app-photo-upload>
 
       <div class="form-group">
@@ -18,7 +18,12 @@
           name="nombre"
           [(ngModel)]="user.nombre" 
           required
+          minlength="3"
+          #nombre="ngModel"
           placeholder="Ingresa tu nombre">
+        <div class="error" *ngIf="nombre.invalid && nombre.touched">
+          El nombre debe tener al menos 3 caracteres
+        </div>
       </div>
 
       <div class="form-group">
@@ -29,7 +34,12 @@
           name="email"
           [(ngModel)]="user.email" 
           required
+          email
+          #email="ngModel"
           placeholder="tu@email.com">
+        <div class="error" *ngIf="email.invalid && email.touched">
+          Ingresa un email válido
+        </div>
       </div>
 
       <div class="form-group">
@@ -38,8 +48,13 @@
           type="tel" 
           id="telefono" 
           name="telefono"
-          [(ngModel)]="user.telefono" 
-          placeholder="+34 600 000 000">
+          [(ngModel)]="user.telefono"
+          pattern="[0-9]{9}"
+          #telefono="ngModel"
+          placeholder="600000000">
+        <div class="error" *ngIf="telefono.invalid && telefono.touched">
+          El teléfono debe tener 9 dígitos
+        </div>
       </div>
 
       <div class="form-group">
@@ -51,17 +66,35 @@
           [(ngModel)]="user.edad" 
           min="18" 
           max="100"
+          required
+          #edad="ngModel"
           placeholder="18">
+        <div class="error" *ngIf="edad.invalid && edad.touched">
+          La edad debe estar entre 18 y 100 años
+        </div>
       </div>
 
-      <button type="submit" class="submit-btn" [disabled]="!userForm.valid">
-        <span *ngIf="!submitted">Registrar</span>
-        <span *ngIf="submitted">✓ Registrado</span>
+      <button type="submit" class="submit-btn" [disabled]="!userForm.valid || registering">
+        <span *ngIf="!registering && !submitted">Registrar</span>
+        <span *ngIf="registering" class="loading-text">
+          <span class="spinner-small"></span>
+          Registrando...
+        </span>
+        <span *ngIf="submitted && !registering">✓ Registrado</span>
       </button>
     </form>
 
-    <div class="success-message" *ngIf="submitted">
-      ¡Usuario registrado exitosamente!
+    <div class="success-overlay" *ngIf="submitted">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h2>¡Registro Exitoso!</h2>
+        <p>Bienvenido, {{ user.nombre }}</p>
+      </div>
     </div>
   </div>
 </div>

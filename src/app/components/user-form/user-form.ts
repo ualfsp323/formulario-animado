@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PhotoUploadComponent } from '../photo-upload/photo-upload';
@@ -24,18 +24,29 @@ export class UserFormComponent {
 
   submitted = false;
   showHome = false;
+  registering = false;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   onPhotoSelected(photo: string) {
     this.user.foto = photo;
   }
 
-  onSubmit() {
-    this.submitted = true;
+  onSubmit(event: Event) {
+    event.preventDefault();
+    this.registering = true;
+    this.cdr.detectChanges();
     console.log('Usuario registrado:', this.user);
     setTimeout(() => {
-      this.submitted = false;
-      this.showHome = true;
-    }, 3000);
+      this.registering = false;
+      this.submitted = true;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.submitted = false;
+        this.showHome = true;
+        this.cdr.detectChanges();
+      }, 2000);
+    }, 1500);
   }
 
   resetForm() {

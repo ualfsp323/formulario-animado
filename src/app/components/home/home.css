@@ -59,42 +59,54 @@
   text-transform: uppercase;
 }
 
-.color-slider {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.95);
-  padding: 1.5rem 3rem;
+.customize-btn {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
   border-radius: 50px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  z-index: 100;
-  animation: slideUp 0.6s ease;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
 }
 
-.color-slider label {
-  font-weight: 700;
-  color: #333;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.9rem;
+.customize-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
 }
 
-.color-slider input[type="color"] {
-  width: 80px;
-  height: 50px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+.customize-btn svg {
+  animation: rotate 2s linear infinite;
 }
 
-.color-slider input[type="color"]:hover {
-  transform: scale(1.1);
+.side-image {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  z-index: 5;
+  animation: fadeInSide 0.8s ease;
+}
+
+.side-image.left {
+  left: 50px;
+}
+
+.side-image.right {
+  right: 50px;
+}
+
+.side-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeInScale {
@@ -117,13 +129,40 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInSide {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(50px);
+    transform: scale(0.8);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: scale(1);
   }
+}
+
+.games-btn {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+}
+
+.games-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(245, 87, 108, 0.6);
 }

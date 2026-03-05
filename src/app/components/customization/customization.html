@@ -1,0 +1,79 @@
+<div class="customization-overlay" (click)="cancel()">
+  <div class="customization-panel" (click)="$event.stopPropagation()">
+    <div class="panel-header">
+      <h2>Personalizar Perfil</h2>
+      <button class="close-btn" (click)="cancel()">×</button>
+    </div>
+
+    <div class="panel-content">
+      <section class="section">
+        <h3>Color de Fondo</h3>
+        <div class="color-picker">
+          <input type="color" [(ngModel)]="backgroundColor" class="color-input">
+          <div class="color-presets">
+            <button 
+              *ngFor="let color of predefinedColors"
+              class="color-preset"
+              [style.background-color]="color"
+              [class.active]="backgroundColor === color"
+              (click)="selectColor(color)">
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Imagen Izquierda</h3>
+        <div class="image-upload-area">
+          <div class="loading-spinner" *ngIf="loadingLeft">
+            <div class="spinner"></div>
+            <p>Cargando imagen...</p>
+          </div>
+          <div class="image-preview" *ngIf="leftImage && !loadingLeft">
+            <img [src]="leftImage" alt="Left preview">
+            <button class="clear-btn" (click)="clearLeftImage()">×</button>
+          </div>
+          <label class="upload-zone" *ngIf="!leftImage && !loadingLeft">
+            <input type="file" accept="image/*,image/gif" (change)="onLeftImageUpload($event)" hidden>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <p>Subir Imagen o GIF</p>
+            <span>Haz clic o arrastra aquí</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Imagen Derecha</h3>
+        <div class="image-upload-area">
+          <div class="loading-spinner" *ngIf="loadingRight">
+            <div class="spinner"></div>
+            <p>Cargando imagen...</p>
+          </div>
+          <div class="image-preview" *ngIf="rightImage && !loadingRight">
+            <img [src]="rightImage" alt="Right preview">
+            <button class="clear-btn" (click)="clearRightImage()">×</button>
+          </div>
+          <label class="upload-zone" *ngIf="!rightImage && !loadingRight">
+            <input type="file" accept="image/*,image/gif" (change)="onRightImageUpload($event)" hidden>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <p>Subir Imagen o GIF</p>
+            <span>Haz clic o arrastra aquí</span>
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <div class="panel-footer">
+      <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+      <button class="btn-apply" (click)="apply()">Aplicar</button>
+    </div>
+  </div>
+</div>

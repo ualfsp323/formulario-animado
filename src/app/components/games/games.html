@@ -1,0 +1,18 @@
+<div class="games-wrapper">
+  <button class="back-btn" (click)="backToLibrary()">← Volver</button>
+  
+  <div class="games-library" *ngIf="!selectedGame">
+    <h1>Librería de Juegos</h1>
+    <div class="games-grid">
+      <div class="game-card" (click)="selectGame('brick-breaker')">
+        <div class="game-icon">🧱</div>
+        <h3>Brick Breaker</h3>
+        <p>Rompe todos los ladrillos</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-view" *ngIf="selectedGame">
+    <app-brick-breaker *ngIf="selectedGame === 'brick-breaker'" [userPhoto]="userPhoto"></app-brick-breaker>
+  </div>
+</div>
