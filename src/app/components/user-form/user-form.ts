@@ -37,6 +37,9 @@ export class UserFormComponent {
     this.registering = true;
     this.cdr.detectChanges();
     console.log('Usuario registrado:', this.user);
+    // Guardar usuario en localStorage
+    localStorage.setItem('tetrisUsername', this.user.nombre);
+    localStorage.setItem('tetrisProfile', 'Usuario Registrado');
     setTimeout(() => {
       this.registering = false;
       this.submitted = true;
